@@ -25,5 +25,10 @@ char const *regnames[] = {
 void
 _debug_dump_registers(long const *regs)
 {
-    // sample push
+    // example printing method:
+    // "%s\t%ld (0x%lx)\n"    <register name>, <register value>, <register value (hex)>  
+    for (int i = 0; i < 16; i++) {
+        // prints name of register than prints register in decimal, hexidecimal
+        printf("%s\t%ld (0x%lx)\n", regnames[i], regs[i], regs[i]);
+    }
 }
