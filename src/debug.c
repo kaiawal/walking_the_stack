@@ -25,5 +25,5 @@ char const *regnames[] = {
 void
 _debug_dump_registers(long const *regs)
 {
-
+    // sample push
 }
