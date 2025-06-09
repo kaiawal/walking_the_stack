@@ -11,7 +11,6 @@ dump_registers:
     push %rsi
     push %rdi
     push %rbp
-    push %rsp
     push %r8
     push %r9
     push %r10
@@ -20,22 +19,8 @@ dump_registers:
     push %r13
     push %r14
     push %r15
+    mov %rsp, %rdi
     call _debug_dump_registers
-    addq $(16*8), %rsp
-    pop %r15
-    pop %r14
-    pop %r13
-    pop %r12
-    pop %r11
-    pop %r10
-    pop %r9
-    pop %r8
-    pop %rsp
-    pop %rbp
-    pop %rdi
-    pop %rsi
-    pop %rdx
-    pop %rcx
-    pop %rbx
-    pop %rax
+    addq $(15*8), %rsp
     ret
+    

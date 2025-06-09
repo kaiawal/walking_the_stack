@@ -1,4 +1,4 @@
-.extern _debug_dump_registers
+.extern print_backtrace
 .globl dump_backtrace
 .type dump_backtrace, @function
 dump_backtrace:
@@ -19,7 +19,7 @@ main_loop:
 
     mov %rcx, %rdi   # arg1: depth
     mov %rdx, %rsi   # arg2: address
-    call print_backtrace_entry
+    call print_backtrace
 
     mov (%rax), %rax # moving to previous pointer
 
