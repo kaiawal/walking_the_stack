@@ -1,3 +1,8 @@
 TODO
 
-Write a readme describing your project. Find an open source project on github for inspiration.
+TODO
+
+This coding project function used x86-64 assembly to implement stack backtrace and register dump. The function uses the frame pointer
+to walk up the call stack, extract return addressesses, resolve them to symbol names using dladdr, and print both function names 
+and a full dumpof general-purpose register values. The function first dump pushes and pops all the registers and then afterwards implement a loop which then 
+leads to call the print backtrace entry. After that we implement the helper C function to debug the code and the project is finished. 
