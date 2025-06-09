@@ -45,5 +45,10 @@ void print_backtrace(long depth, void *addr){
         // print depth, memory address, function name, file name
         // "%3ld: [%lx] %s () %s\n"    <depth>, <symbol address>, <symbol name>, <file name>
         printf("%3ld: [%lx] %s () %s\n", depth, (long)addr, info.dli_sname, info.dli_fname);
+<<<<<<< HEAD
+=======
+    } else {
+        printf("%3ld: [%lx] ??? () ???\n", depth, (unsigned long)addr);
+>>>>>>> f58ab3ddda25bbafbfbde174df238999932794d1
     }
 }
