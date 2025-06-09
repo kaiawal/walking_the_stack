@@ -2,8 +2,9 @@
 .globl dump_registers
 .type dump_registers, @function
 dump_registers:
-    subq $(16*8), %rsp
-    movq %rsp, %rdi
+    push %rbp
+    mov %rsp, %rbp
+    sub $8, %rsp
     push %rax
     push %rbx
     push %rcx
@@ -11,6 +12,8 @@ dump_registers:
     push %rsi
     push %rdi
     push %rbp
+    lea 16(%rbp), %rax
+    push %rax
     push %r8
     push %r9
     push %r10
@@ -21,6 +24,6 @@ dump_registers:
     push %r15
     mov %rsp, %rdi
     call _debug_dump_registers
-    addq $(15*8), %rsp
+    add $(16*8 + 8), %rsp
+    pop %rbp
     ret
-    
