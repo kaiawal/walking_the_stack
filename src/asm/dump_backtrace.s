@@ -3,9 +3,61 @@
 .type dump_backtrace, @function
 dump_backtrace:
     push %rbp 
+    mov %rsp, %rbp
+    push %rbx  # Save rbx since we'll use it
+    push %rcx  # Save rcx for depth counter
+    
+    # Ensure 16-byte stack alignment
+    # We've pushed 3 values (24 bytes), need 8 more for 32-byte alignment
+    sub $8, %rsp
+
+    # Get the frame pointer from caller's caller
+    # Start with our caller's frame
+    mov 0(%rbp), %rbx  # rbx = caller's frame pointer
+    mov $0, %rcx       # depth counter
+
+loop:
+    # Basic sanity checks
+    test %rbx, %rbx
+    jz done
+    
+    # Simple bounds check - frame pointer should be reasonable
+    cmp %rsp, %rbx
+    jbe done  # If frame pointer <= stack pointer, something's wrong
+    
+    # Get return address
+    mov 8(%rbx), %rax
+    test %rax, %rax
+    jz done
+
+    # Call print_backtrace(depth, address)
+    # Stack is now 16-byte aligned
+    mov %rcx, %rdi     # first arg: depth  
+    mov %rax, %rsi     # second arg: address
+    call print_backtrace
+
+    # Move to next frame
+    mov 0(%rbx), %rbx
+    inc %rcx
+    
+    # Prevent infinite loops
+    cmp $50, %rcx
+    jl loop
+
+done:
+    # Restore stack alignment
+    add $8, %rsp
+    pop %rcx
+    pop %rbx
+    pop %rbp
+    ret
+
+/*
+dump_backtrace:
+    push %rbp 
     mov %rsp, %rbp # save stack pointer
 
-    mov (%rbp), %rax # using rax to traverse
+    mov %rbp, %rax # using rax to traverse
     mov $0, %rcx
 
 main_loop:
@@ -38,3 +90,4 @@ exit:
 backtrace_format_str:
 .asciz "%3ld: [%lx] %s () %s\n"
 
+*/
