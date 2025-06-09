@@ -1,3 +1,4 @@
+.extern _debug_dump_registers
 .globl dump_backtrace
 .type dump_backtrace, @function
 dump_backtrace:
